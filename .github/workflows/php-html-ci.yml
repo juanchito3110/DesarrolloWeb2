@@ -1,0 +1,23 @@
+name: Verificar PHP y HTML
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Verificar sintaxis PHP
+        run: find . -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: Validar archivos HTML
+        run: npm install -g htmlhint && htmlhint **/*.html
